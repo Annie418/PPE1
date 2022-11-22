@@ -1,2 +1,3 @@
 # PPE1
-Programmation et Projet Encadré 1
+Cours de Programmation et Projet Encadré M1 TAL
+Yingzi LIU
