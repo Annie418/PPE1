@@ -17,12 +17,15 @@ fichier_tableau=$2 # le fichier HTML en sortie
 # !!!!!!
 
 # modifier la ligne suivante pour créer effectivement du HTML
-echo "Je dois devenir du code HTML à partir de la question 3" > $fichier_tableau
+echo "<table>" >> $fichier_tableau
 
 lineno=1;
 
 while read -r line;
 do
 	echo "ligne $lineno: $line";
+	echo "<tr><td>$lineno</td><td>$line</td></tr> ">>$fichier_tableau
 	lineno=$((lineno+1));
 done < $fichier_urls
+
+echo "</table>" >> $fichier_tableau
