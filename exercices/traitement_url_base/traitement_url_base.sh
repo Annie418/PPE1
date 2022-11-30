@@ -18,8 +18,29 @@ do
 	then
 		echo "200 OK"
 		DUMP=$(lynx -dump -nolist -assume_charset=$CHARSET -display_charset=$CHARSET $URL) # 网页的文本内容
-		# 算出现次数
+		# exercices 1 用curl访问URL，获取html，存到aspiration文件夹里
+		HTML_RESPONSE=$(curl $URL)
+		echo "$HTML_RESPONSE" > ../urls_exercices_2/aspirations/fich1.html 
+		# exercices 2 将DUMP存到dumps-text
+		echo "$DUMP" > ../urls_exercices_2/dumps-text/fich1_1.txt
+		# exercices 3 算出现次数
 		OCCURENCE=$(echo $DUMP | egrep -o '(m|M)éli-mélo|(m|M)eli-melo' | wc -l | xargs)
+
+		# exercices 4 将关键词前后的ligne提取，放到contextes里
+		CONTEXT_LIGNE_PRE=$(echo $DUMP | egrep -A 1 '(m|M)éli-mélo|(m|M)eli-melo')
+		echo "$CONTEXT_LIGNE_PRE" > ../urls_exercices_2/contextes/fich1_1.txt
+		CONTEXT_LIGNE_AVA=$(echo $DUMP | egrep -B 1 '(m|M)éli-mélo|(m|M)eli-melo')
+		echo "$CONTEXT_LIGNE_AVA" > ../urls_exercices_2/contextes/fich1_2.txt
+		# exercices 5 将关键词左右的句子提取，放到html的某几列
+		
+		CONTEXT_LIGNE_MIL=$(echo $DUMP | egrep -o '(m|M)éli-mélo|(m|M)eli-melo')
+		echo "<html><header><meta charset="UTF-8" /></header><body>" > ../urls_exercices_2/tableaux/tableaux.html
+		echo "<table>" >> ../urls_exercices_2/tableaux/tableaux.html
+		echo "<tr>
+				<th>$CONTEXT_LIGNE_AVA</th>
+				<th>$CONTEXT_LIGNE_MIL</th>
+				<th>$CONTEXT_LIGNE_PRE</th>
+			</tr>" >> ../urls_exercices_2/tableaux/tableaux.html
 		echo "<tr>
 				<th>$lineno</th>
 				<th>$CODE</th>
